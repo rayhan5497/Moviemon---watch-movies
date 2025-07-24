@@ -17,7 +17,7 @@
     <div class="background" id="bg1"></div>
     <div class="background" id="bg2"></div>
     <div class="container">
-        <h1>Torrent Search</h1>
+        <h1>Search Movies</h1>
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Search for torrents...">
             <button id="searchBtn">Search</button>
@@ -27,14 +27,19 @@
 
 
     <div class="modal" id="movieModal">
+        <div id="backdrop"></div>
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
-            <img id="moviePoster" src="" alt="Movie Poster">
-            <h2 id="movieTitle"></h2>
-            <p id="movieDescription"></p>
-            <p><strong>Year:</strong> <span id="movieYear"></span></p>
-            <p><strong>Rating:</strong> <span id="movieRating"></span></p>
-            <p><strong>Genres:</strong> <span id="movieGenres"></span></p>
+            <div class="poster-and-description">
+                <img id="moviePoster" src="" alt="Movie Poster">
+                <div class="description-container">
+                    <h2 id="movieTitle"></h2>
+                    <p id="movieDescription"></p>
+                    <p><strong>Year:</strong> <span id="movieYear"></span></p>
+                    <p><strong>Rating:</strong> <span id="movieRating"></span></p>
+                    <p><strong>Genres:</strong> <span id="movieGenres"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -44,7 +49,7 @@
         </button>
         <iframe id="videoPlayer" src="" frameborder="0" allowfullscreen="true"></iframe>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 

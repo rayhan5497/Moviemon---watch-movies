@@ -73,9 +73,9 @@
     z-index: -1;
     opacity: 1;
     box-shadow: 0 0 15px 5px black;
-}
+  }
 
-.title-and-btn-container {
+  .title-and-btn-container {
     margin: -15px;
     padding: 50px 10px 10px;
     border-radius: 0 0 20px 20px;
@@ -84,10 +84,9 @@
     text-align: center;
     font-size: 10px;
     gap: 5px;
-    display: flex
-;
+    display: flex;
     flex-direction: column;
-}
+  }
 
   .title-and-btn-container .buttons {
     display: flex;
@@ -99,4 +98,15 @@
     margin-left: -20px;
   }
 
+}
+
+@media (max-width: 800px) {
+  .poster-and-description {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #moviePoster {
+    width: 80%;
+  }
 }
