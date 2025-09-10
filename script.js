@@ -204,7 +204,10 @@ async function getMovies(sortedMovies) {
           const imdbId = event.target.getAttribute('imdb-id');
 
           if (imdbId) {
-            videoPlayer.src = `https://multiembed.mov/?video_id=${imdbId}`;
+            // videoPlayer.src = `https://multiembed.mov/?video_id=${imdbId}`;
+            // videoPlayer.src = `https://gomo.to/movie/${imdbId}`;
+            // videoPlayer.src = `https://www.2embed.cc/embed/${imdbId}`;
+            videoPlayer.src = `https://vidsrc.to/embed/movie/${imdbId}`;
             playerContainer.style.display = 'block';
             container.style.filter = 'blur(20px)';
             container.style.pointerEvents = 'none';

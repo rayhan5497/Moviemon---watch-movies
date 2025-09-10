@@ -5,14 +5,118 @@
     font-family: Arial, sans-serif;
 }
 
+html {
+    height: 100vh;
+}
+
 body {
     background-color: #121212;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
     flex-direction: column;
+}
+
+.header {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: #4dc6fff1;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #ffffff52;
+    filter: drop-shadow(-2px 0px 3px black) contrast(2);
+    background-color: #ffffff00;
+    backdrop-filter: blur(10px) brightness(0.6) saturate(2.5);
+    z-index: 20;
+}
+
+.menu {
+    /* background-color: #313131; */
+    width: fit-content;
+    transition: 0.5s ease;
+}
+
+.bars {
+    padding: 7px 5px;
+    color: #4dc6fff1;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 10px;
+    border: 1px solid #ffffff80;
+    background-color: transparent;
+    height: 44px;
+    z-index: 10;
+    position: relative;
+}
+
+.bar {
+    background-color: rgb(255, 255, 255);
+    width: 35px;
+    height: 3px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    transition: 0.5s ease;
+}
+
+
+.option-container {
+    border-radius: 0 0 10px;
+    transition: 0.5s ease;
+    top: 0;
+    position: absolute;
+    padding: 100px 25px;
+    margin-left: -10px;
+    transform-origin: 30% 10%;
+    transform: scale(0);
+    height: 100vh;
+    width: 50%;
+}
+
+
+.option {
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #ffffff12;
+    padding: 10px 20px;
+    width: fit-content;
+    border: 1px solid #ffffff30;
+}
+
+.site-name {
+    font-size: 30px;
+    color: #48c5fff1;
+    filter: drop-shadow(1px 4px 2px black);
+}
+
+.login {
+    padding: 7px 15px;
+    color: #4dc6fff1;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 10px;
+    border: 1px solid #ffffff69;
+    filter: drop-shadow(-2px 0px 3px black) contrast(2.5);
+    background-color: transparent;
+    height: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.login:hover {
+    filter: drop-shadow(-2px 0px 1px black) contrast(2.5);
+}
+
+.backdrop {
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    background-color: #00000080;
+    position: absolute;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+    top: 0;
 }
 
 .container {
@@ -20,7 +124,6 @@ body {
     width: 90%;
     max-width: 100%;
     text-align: center;
-    margin-top: 100px;
 }
 
 h1 {
@@ -35,7 +138,12 @@ h1 {
     gap: 10px;
     max-width: 600px;
     margin: auto;
-    width: auto;
+    width: 95%;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 20;
 }
 
 input {
@@ -43,10 +151,160 @@ input {
     padding: 10px;
     font-size: 16px;
     border-radius: 10px;
-    background: #ffffff94;
-    border: 1px solid #ffffff54;
+    background: #00000000;
+    border: 1px solid #ffffff94;
     box-shadow: 0 0 20px #00d0ff6b;
+    outline: none;
+    color: white;
 }
+
+#searchBtn {
+    padding: 7px 15px;
+    color: #4dc6fff1;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    border: 1px solid #00000026;
+    filter: drop-shadow(-2px 0px 3px black) contrast(2.5);
+    background-color: #ffffff3b;
+}
+
+#searchBtn:hover {
+    filter: drop-shadow(-2px 0px 1px black) contrast(2.5);
+}
+
+#filterMovies h1 {
+    color: #48c5fff1;
+    filter: drop-shadow(1px 4px 2px black);
+    font-weight: 100;
+    font-size: 28px;
+    margin: 10px;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px 7px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    font-family: sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+.dropdown-sign {
+    transform: scaleY(1);
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-toggle-container {
+    padding: 8px 12px;
+    cursor: pointer;
+    user-select: none;
+    filter: drop-shadow(-2px 0px 3px black) contrast(2);
+    background-color: rgb(0 0 0 / 19%);
+    border-radius: 10px;
+    opacity: 0.7;
+    position: relative;
+    border: 1px solid #ffffff5c;
+    backdrop-filter: blur(5px);
+}
+
+.dropdown.open .dropdown-toggle-container {
+    opacity: 1;
+    z-index: 10;
+    border-radius: 10px 10px 10px 0;
+}
+
+.dropdown-toggle {
+    user-select: none;
+}
+
+.dropdown-toggle-container:hover {
+    filter: drop-shadow(-2px 0px 1px black) contrast(2.5) brightness(1.2);
+}
+
+.dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ffffff6b;
+    padding: 10px;
+    box-shadow: 0 0 10px 1px rgb(0 0 0);
+    background-color: rgb(0 0 0 / 59%);
+    backdrop-filter: blur(5px);
+    transform: scale(0);
+    transform-origin: 0% 0%;
+    transition: 0.3s ease;
+    border-radius: 0 10px 10px 10px;
+}
+
+.dropdown.open .dropdown-menu {
+    transform: scale(1);
+    z-index: 1;
+    width: 200px;
+}
+
+
+.selectAll {
+    padding: 5px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+    color: #ffffff;
+    background-color: #00000000;
+    border: 1px solid #ffffff63;
+    border-radius: 10px;
+}
+
+.selectAll:hover {
+    color: #000000;
+    filter: drop-shadow(0px 0px 1px black) brightness(2);
+    background-color: #0087ffd1;
+    border: 1px solid transparent;
+}
+
+.dropdown-menu label {
+    display: block;
+    margin-bottom: 4px;
+    cursor: pointer;
+    border: 1px solid #ffffff63;
+    border-radius: 10px;
+    padding: 7px;
+}
+
+.dropdown-menu input[type="checkbox"] {
+    margin-right: 6px;
+    width: 12px;
+    height: 12px;
+    accent-color: #48c5fff1;
+    cursor: pointer;
+    box-shadow: 0 0 1px #48c5fff1;
+    padding: 10px;
+}
+
+.dropdown-menu input[type="radio"] {
+    margin-right: 6px;
+    width: 15px;
+    height: 15px;
+    accent-color: #48c5fff1;
+    cursor: pointer;
+    box-shadow: 0 0 1px #48c5fff1;
+    padding: 10px;
+}
+
+
 
 .title-and-btn-container {
     margin: -15px;
@@ -145,6 +403,7 @@ button {
     cursor: pointer;
     font-size: 20px;
     border-radius: 20px;
+    transition: 0.3s ease;
 }
 
 .buttons button {

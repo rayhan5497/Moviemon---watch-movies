@@ -1,19 +1,17 @@
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .container {
     height: 100%;
     width: 90%;
     max-width: 100%;
     text-align: center;
-    margin-top: 100px;
   }
 
   #results {
     margin-top: 20px;
     text-align: left;
-    display: flex;
+    display: grid;
     gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(133px, 1fr));
   }
 
 
@@ -22,7 +20,7 @@
     padding: 15px;
     border-radius: 20px;
     height: 200px;
-    width: 133px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -99,7 +97,16 @@
   }
 
 }
+@media (max-width: 400px) {
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
 
+  .result-item {
+    min-width: 0;
+  }
+}
 @media (max-width: 800px) {
   .poster-and-description {
     flex-direction: column;
