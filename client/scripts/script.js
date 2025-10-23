@@ -102,7 +102,7 @@ async function initApp() {
     });
   }
   try {
-    const response = await fetch('../json/tmdbData.jsonc');
+    const response = await fetch('/json/tmdbData.jsonc');
     const tmdbData = await response.json();
     populateDropdown(tmdbData, 'language');
     populateDropdown(tmdbData, 'genre');
