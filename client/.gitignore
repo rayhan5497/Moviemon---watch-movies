@@ -1,0 +1,7 @@
+# critical files
+/node_modules
+/scripts/copy script.js
+.env
+
+# experimental files
+/temp

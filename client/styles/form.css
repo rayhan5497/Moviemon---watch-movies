@@ -1,0 +1,118 @@
+.login-page {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  z-index: 20;
+  backdrop-filter: blur(40px) brightness(1) saturate(3);
+  padding: 50px;
+  border: 1px solid #00deff8f;
+  border-radius: 20px;
+  transform: translate(50%, -50%);
+  width: 95%;
+  justify-content: space-around;
+  align-items: center;
+  display: none;
+  gap: 20px;
+}
+
+.login-page h3 {
+  font-size: 25px;
+  margin-bottom: 30px;
+}
+
+.login-page h2 {
+  font-size: 35px;
+  font-weight: 100;
+}
+
+.signup-page-wlcm {
+  display: none;
+  align-items: baseline;
+  flex-direction: column;
+}
+
+.login-page-wlcm {
+  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-container {
+  display: none;
+  flex-direction: column;
+}
+
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-auth-forms {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-auth-forms label {
+  display: none;
+}
+
+.fp-btn {
+  font-size: 12px;
+  padding: 5px 10px;
+  width: fit-content;
+  height: auto;
+  align-self: end;
+  order: 0;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.have-account {
+  margin: 20px 0;
+  font-size: 23px;
+  font-weight: 100;
+  opacity: 0.8;
+}
+
+.user-auth-forms button {
+  order: 0;
+}
+
+.signup-with-google,
+.login-with-google {
+
+  align-items: center;
+  display: flex;
+  font-size: 15px;
+  gap: 10px;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #ffffff5c;
+  background-color: transparent;
+
+}
+
+.signup-with-google img,
+.login-with-google img {
+  width: 20px;
+}
+
+form .or {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+form>p>span {
+  width: 45%;
+  display: block;
+  background: #ffffff;
+  height: 1px;
+}

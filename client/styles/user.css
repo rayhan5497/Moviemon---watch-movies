@@ -1,0 +1,97 @@
+.user {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    z-index: 20;
+    right: 0;
+    backdrop-filter: blur(50px) saturate(2.5) brightness(0.5);
+    padding: 30px;
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+
+#userProfile {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    background: #00b8ff3b;
+    padding: 10px 0 0;
+    border: 1px solid #ffffff38;
+    border-radius: 10px;
+}
+
+img.profile-image {
+    width: 100px;
+    border: 1px solid #00c7ff70;
+    border-radius: 50%;
+    height: 100px;
+    text-align: center;
+    align-content: center;
+}
+
+h2.profile-name {
+    color: #00f1ff;
+}
+
+.user-info-container {
+    font-size: 11px;
+    opacity: 0.6;
+    background: #00000033;
+    width: 100%;
+    gap: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+}
+
+nav#userData {
+    display: flex;
+    flex-direction: column;
+}
+
+#userData>div {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    padding: 5px;
+    background: #ffffff0d;
+    border-radius: 10px;
+}
+
+button.expand-btn {
+    padding: 7px;
+    background: #ffffff00;
+}
+
+.expand-btn h2 {
+    font-size: 16px;
+}
+
+div.collapsible-content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: #0000001f;
+    gap: 7px;
+    border-radius: 5px;
+}
+
+#userData a {
+    color: white;
+    text-decoration: none;
+    background: #ffffff1f;
+    font-size: 11px;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 8px;
+    opacity: 0.8;
+}
+
+#userData a:hover {
+    background: #00c4ff5e;
+    opacity: 1;
+}

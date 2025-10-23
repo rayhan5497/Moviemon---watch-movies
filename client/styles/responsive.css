@@ -1,0 +1,243 @@
+@media (hover: hover) and (pointer: fine) {
+  .result-item:hover>.play-btn {
+    left: 52%;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 30px solid #00b4ff;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .result-item:hover>.play-btn::before {
+    content: "";
+    position: absolute;
+    top: -35px;
+    left: -55px;
+    width: 70px;
+    height: 70px;
+    background: #ffffff45;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .result-item:hover {
+    background-blend-mode: soft-light;
+    transform: scale(1.04);
+  }
+}
+
+
+@media (max-width: 680px) {
+  .container {
+    height: 100%;
+    width: 98%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  #results {
+    gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .result-item-wrapper {
+    height: 285px;
+    width: 100%;
+  }
+
+  .result-item {
+    width: 150px;
+  }
+
+  .rating-value {
+    margin-top: 210px;
+  }
+
+  .play-btn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    transition: 0.3s ease;
+    left: 57%;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 30px solid #00b4ff;
+    scale: 1.2;
+    display: none;
+  }
+
+  .play-btn.play-btn-active {
+    left: 50%;
+    scale: 0.7;
+    display: block;
+  }
+
+
+  .play-btn::before {
+    content: "";
+    position: absolute;
+    top: -35px;
+    left: -55px;
+    width: 70px;
+    height: 70px;
+    background: #ffffff45;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 1;
+    box-shadow: 0 0 15px 5px black;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .title {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+
+  /* Form */
+  .login-page {
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    z-index: 20;
+    backdrop-filter: blur(40px) brightness(0.5);
+    padding: 35px;
+    border: 1px solid #00deff8f;
+    border-radius: 20px;
+    transform: translate(50%, -50%);
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    gap: 70px;
+  }
+
+  .login-page h2 {
+    font-size: 26px;
+  }
+
+  .have-account {
+    margin: 9px 0;
+    font-size: 20px;
+  }
+
+  .login-page h3 {
+    font-size: 25px;
+    margin-bottom: 15px;
+  }
+
+}
+
+@media (max-width: 400px) {
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+
+  .result-item {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .poster-and-description {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #moviePoster {
+    width: 80%;
+  }
+}
+
+@media (min-width: 900px) {
+  .header {
+    width: 100%;
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: #4dc6fff1;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #ffffff52;
+    filter: drop-shadow(-2px 0px 3px black) contrast(2);
+    background-color: #ffffff00;
+    backdrop-filter: blur(10px) brightness(0.6) saturate(2.5);
+    z-index: 20;
+    align-items: center;
+  }
+
+  .menu {
+    /* background-color: #313131; */
+    width: fit-content;
+    transition: 0.5s ease;
+    order: 2;
+  }
+ 
+  .bar-container {
+    position: relative;
+  }
+  
+  .bars {
+    display: none;
+  }
+
+  .option-container {
+    border-radius: 10px;
+    transition: 0.5s ease;
+    transform-origin: 1% 1%;
+    transform: scale(1);
+    display: flex;
+    position: relative;
+    background-color: #00000045;
+    width: auto;
+    height: auto;
+    padding: 0;
+  }
+
+  .option {
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #ffffff5e;
+    padding: 10px 20px;
+    width: fit-content;
+  }
+
+  .site-name {
+    font-size: 25px;
+    color: #48c5fff1;
+    filter: drop-shadow(1px 4px 2px black);
+  }
+
+  .login {
+    padding: 7px 15px;
+    color: #4dc6fff1;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 10px;
+    border: 1px solid #ffffff69;
+    filter: drop-shadow(-2px 0px 3px black) contrast(2.5);
+    background-color: transparent;
+    height: 40px;
+    backdrop-filter: blur(10px);
+    order: 3;
+  }
+
+  .login-page {
+    width: 80%;
+  }
+}
+
+
+@media (min-width: 1300px) {
+  .login-page {
+    width: 50%;
+  }
+}

@@ -1,0 +1,10 @@
+# Critical files and directories to be ignored by Git
+node_modules/
+.env
+
+# Temporary files
+temp/
+
+# Later additions
+public/
+services/
