@@ -6,8 +6,8 @@
     "node": ">=20.19.0"
   },
   "scripts": {
-    "start": "node --env-file=.env server.js",
-    "dev": "node --watch --env-file=.env server.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
     "start-railway": "node server.js"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.20.0",
