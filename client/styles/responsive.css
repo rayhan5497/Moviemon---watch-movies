@@ -167,9 +167,7 @@
     color: #4dc6fff1;
     border-radius: 0 0 10px 10px;
     border: 1px solid #ffffff52;
-    filter: drop-shadow(-2px 0px 3px black) contrast(2);
-    background-color: #ffffff00;
-    backdrop-filter: blur(10px) brightness(0.6) saturate(2.5);
+    background-color: #001629e0;
     z-index: 20;
     align-items: center;
   }

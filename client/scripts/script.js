@@ -1,6 +1,14 @@
 import { filterMovies } from './filterMovies.js';
 import { showBackdrop } from './utils.js';
 
+const modal = document.getElementById('movieModal');
+const modalContent = document.querySelector('.modal-content');
+const searchInput = document.getElementById('searchInput');
+const moviePoster = document.getElementById('moviePoster');
+const noPosterText = moviePoster.nextElementSibling;
+const container = document.querySelector('.container');
+const resultsContainer = document.getElementById('results');
+
 const api_key = '';
 const globalParams = {
   default: {
@@ -47,20 +55,11 @@ const getSearchParameter = () => {
 
 let data;
 let tempData = [];
-let isHomePage = true;
-let isSearchPage = false;
+let currentPageType = 'search';
 let isSearchBtnClicked = false;
 let isLoading = false;
 let isScrolledToEnd = false;
 let isAdultConfirmed = true;
-
-const modal = document.getElementById('movieModal');
-const modalContent = document.querySelector('.modal-content');
-const searchInput = document.getElementById('searchInput');
-const moviePoster = document.getElementById('moviePoster');
-const noPosterText = moviePoster.nextElementSibling;
-const container = document.querySelector('.container');
-const resultsContainer = document.getElementById('results');
 
 async function initApp() {
   function populateDropdown(tmdbData, type) {
@@ -107,16 +106,6 @@ async function initApp() {
     populateDropdown(tmdbData, 'language');
     populateDropdown(tmdbData, 'genre');
 
-    document.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY || window.pageYOffset;
-      const clientHeight = document.documentElement.clientHeight;
-      const scrollHeight = document.documentElement.scrollHeight;
-
-      if (scrollTop + clientHeight >= scrollHeight + -5) {
-        onScrollToEnd();
-      }
-    });
-
     const onScrollToEnd = () => {
       if (isLoading) return;
       isLoading = true;
@@ -127,13 +116,21 @@ async function initApp() {
       });
     };
 
+    let scrollTimeout;
+    document.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const { scrollTop, clientHeight, scrollHeight } =
+          document.documentElement;
+        if (scrollTop + clientHeight >= scrollHeight - 5) onScrollToEnd();
+      }, 1150);
+    });
+
     document.getElementById('searchBtn').addEventListener('click', () => {
       const searchValue = searchInput.value;
       if (searchValue.length === 0) return;
 
       isSearchBtnClicked = true;
-      isSearchPage = true;
-      isHomePage = false;
       globalParams.search.page = 1;
       globalParams.default.page = 1;
       getMovies(sortMovies());
@@ -184,16 +181,33 @@ async function initApp() {
       animateModalClose();
     }
 
+    // Retrieve DOM elements
+    const {
+      movieTitle,
+      movieDescription,
+      movieYear,
+      movieRating,
+      movieGenres,
+      movieRuntime,
+    } = {
+      movieTitle: document.getElementById('movieTitle'),
+      movieDescription: document.getElementById('movieDescription'),
+      movieYear: document.getElementById('movieYear'),
+      movieRating: document.getElementById('movieRating'),
+      movieGenres: document.getElementById('movieGenres'),
+      movieRuntime: document.getElementById('movieRuntime'),
+    };
+
     function LoadingModal() {
       moviePoster.classList.add('poster-loading');
       modal.classList.add('data-loading');
       moviePoster.src = '';
-      document.getElementById('movieTitle').innerText = 'Loading...';
-      document.getElementById('movieDescription').innerText = 'Loading...';
-      document.getElementById('movieYear').innerText = 'Loading...';
-      document.getElementById('movieRating').innerText = 'Loading...';
-      document.getElementById('movieGenres').innerText = 'Loading...';
-      document.getElementById('movieRuntime').innerText = 'Loading...';
+      movieTitle.innerText = 'Loading...';
+      movieDescription.innerText = 'Loading...';
+      movieYear.innerText = 'Loading...';
+      movieRating.innerText = 'Loading...';
+      movieGenres.innerText = 'Loading...';
+      movieRuntime.innerText = 'Loading...';
     }
 
     function fillModal(movie) {
@@ -202,7 +216,7 @@ async function initApp() {
       }
 
       moviePoster.src = movie.poster_path
-        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
         : '';
 
       if (!moviePoster.getAttribute('src')) {
@@ -214,17 +228,13 @@ async function initApp() {
         noPosterText.style.opacity = 0;
       });
 
-      document.getElementById('movieTitle').innerText = movie.title;
-      document.getElementById('movieDescription').innerText =
-        movie.overview || 'No description available';
-      document.getElementById('movieYear').innerText =
-        movie.release_date || 'Unknown';
-      document.getElementById('movieRating').innerText =
-        movie.vote_average || 'Not rated';
-      document.getElementById('movieGenres').innerText =
+      movieTitle.innerText = movie.title || 'Title not available';
+      movieDescription.innerText = movie.overview || 'No description available';
+      movieYear.innerText = movie.release_date || 'Unknown';
+      movieRating.innerText = movie.vote_average || 'Not rated';
+      movieGenres.innerText =
         movie.genres?.map((g) => g.name).join(', ') || 'Unknown';
-      document.getElementById('movieRuntime').innerText =
-        movie.runtime + ` Min` || 'Unknown';
+      movieRuntime.innerText = movie.runtime + ` Min` || 'Unknown';
     }
 
     function openModal(movieId, button) {
@@ -306,7 +316,7 @@ async function initApp() {
 }
 
 const sortMovies = () => {
-  if (isSearchPage) {
+  if (currentPageType === 'search') {
     return getSearchParameter();
   } else {
     return getDefaultParameter();
@@ -314,16 +324,12 @@ const sortMovies = () => {
 };
 
 function pageNumber() {
-  if (!isSearchPage) {
-    globalParams.default.page++;
-    globalParams.search.page = 1;
+  if (currentPageType === 'search') {
+    globalParams.search.page++;
+    globalParams.default.page = 1;
   } else {
-    if (!isSearchBtnClicked) {
-      globalParams.search.page++;
-    } else {
-      globalParams.search.page++;
-      isSearchBtnClicked = false;
-    }
+    globalParams.default.page++;
+    isSearchBtnClicked = false;
   }
 }
 
@@ -333,11 +339,11 @@ async function getMovies(sortedMovies) {
     console.log('cleared tempData', tempData);
   }
 
-  if (isSearchPage) {
-    console.log('isHomePage', isHomePage);
+  if (currentPageType === 'search') {
+    console.log('isHomePage');
     globalParams.default.page = 1;
   } else {
-    console.log('isSearchPage', isSearchPage);
+    console.log('isSearchPage');
     globalParams.search.page = 1;
   }
 
@@ -380,12 +386,10 @@ async function getMovies(sortedMovies) {
     const queryString = new URLSearchParams(params).toString();
 
     async function getResponse() {
-      if (isSearchPage) {
-        isHomePage = false;
+      if (currentPageType === 'search') {
         const fullUrl = `${SearchUrl}?${queryString}`;
         return await fetch(fullUrl);
       } else {
-        isHomePage = true;
         const fullUrl = `${discoverUrl}?${queryString}`;
         return await fetch(fullUrl);
       }
@@ -396,6 +400,11 @@ async function getMovies(sortedMovies) {
     const previousData = data;
 
     data = await response.json();
+
+    if (!data?.results) {
+      console.error('No results in response', data);
+      return;
+    }
 
     data.results.forEach((movie) => tempData.push(movie));
 
@@ -434,8 +443,19 @@ async function getMovies(sortedMovies) {
 
     pageNumber();
 
+    const bgs = [
+      document.getElementById('bg1'),
+      document.getElementById('bg2'),
+    ];
+
+    // SET BG BACKGROUND WHEN MOVIES STARTED ADDING TO DOM
+    bgs[0].style.backgroundImage = `url(https://image.tmdb.org/t/p/w185/${data?.results[1]?.poster_path})`;
+    bgs[0].classList.add('active');
+    bgs[1].classList.remove('active');
+
     let current = 0;
     async function processMovies(movies) {
+      const fragment = document.createDocumentFragment();
       for (const movie of movies) {
         const itemWrapper = document.createElement('div');
         itemWrapper.classList.add('result-item-wrapper');
@@ -445,16 +465,6 @@ async function getMovies(sortedMovies) {
         const moviePoster = `url(https://image.tmdb.org/t/p/w185/${movie.poster_path})`;
 
         item.style.backgroundImage = moviePoster;
-
-        const bgs = [
-          document.getElementById('bg1'),
-          document.getElementById('bg2'),
-        ];
-
-        // SET BG BACKGROUND WHEN MOVIES STARTED ADDING TO DOM
-        bgs[0].style.backgroundImage = `url(https://image.tmdb.org/t/p/w185/${data?.results[1]?.poster_path})`;
-        bgs[0].classList.add('active');
-        bgs[1].classList.remove('active');
 
         item.addEventListener('mouseenter', () => {
           const next = (current + 1) % 2;
@@ -495,7 +505,8 @@ async function getMovies(sortedMovies) {
             : movie.title;
         itemWrapper.appendChild(item);
         itemWrapper.appendChild(h3);
-        resultsContainer.appendChild(itemWrapper);
+        fragment.appendChild(itemWrapper);
+        resultsContainer.appendChild(fragment);
       }
     }
     await processMovies(data.results);
@@ -719,42 +730,40 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Login form submission
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('login-form');
+const loginForm = document.getElementById('login-form');
 
-  loginForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent default form submission
+loginForm.addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
 
-    // Collect login form data
-    const loginData = {
-      email: loginForm.email.value,
-      password: loginForm.password.value,
-    };
+  // Collect login form data
+  const loginData = {
+    email: loginForm.email.value,
+    password: loginForm.password.value,
+  };
 
-    try {
-      const response = await fetch('http://localhost:3000/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Include cookies for session management,
-        body: JSON.stringify(loginData),
-      });
+  try {
+    const response = await fetch('http://localhost:3000/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', // Include cookies for session management,
+      body: JSON.stringify(loginData),
+    });
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (response.ok) {
-        console.log('Login successful:', result);
-        // Redirect or do something after login
-        loginForm.reset();
-        // Example: window.location.href = '/dashboard';
-      } else {
-        console.error('Login failed:', result.message || result);
-      }
-    } catch (err) {
-      console.error('Fetch error during login:', err);
+    if (response.ok) {
+      console.log('Login successful:', result);
+      // Redirect or do something after login
+      loginForm.reset();
+      // Example: window.location.href = '/dashboard';
+    } else {
+      console.error('Login failed:', result.message || result);
     }
-  });
+  } catch (err) {
+    console.error('Fetch error during login:', err);
+  }
 });
 
 export { defaultParams, globalParams, resultsContainer, getMovies, sortMovies };

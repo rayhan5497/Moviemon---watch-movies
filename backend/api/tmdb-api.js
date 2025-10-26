@@ -79,18 +79,11 @@ async function getMovies(sortedMovies) {
 
     const data = await response.json();
 
-    console.log('data length', data.results.length)
-
-    if (data.results.length === 0) {
-      console.log('data', 0);
-      if (data === previousData) return;
-    }
-
     let filteredMovies = [];
     async function processMovies(movies) {
       let filteredIds = [];
+      if (filterAdult) {
       for (const movie of movies) {
-        if (filterAdult) {
           if (movie.adult === true) {
             console.warn(
               'adult movie',
@@ -194,23 +187,22 @@ async function getMovies(sortedMovies) {
 
           filteredIds.push(movie.id);
         }
-      }
-
-      // Filter Movies by keywords after getting individual data of each movies.
-      const detailedMovies = await Promise.all(
-        filteredIds.map((id) => getMovieDetails(id))
-      );
-
-
-      console.log('filteredIds', filteredIds.length);
-      console.log('detailedMovies', detailedMovies.length);
-
-      if (detailedMovies.length < 0) return;
-
-      for (const movie of detailedMovies) {
-        const hasAdultKeyword = movie.keywords?.keywords?.some(
-          (k) =>
-            k.id === 155477 ||
+        
+        // Filter Movies by keywords after getting individual data of each movies.
+        const detailedMovies = await Promise.all(
+          filteredIds.map((id) => getMovieDetails(id))
+        );
+        
+        
+        console.log('filteredIds', filteredIds.length);
+        console.log('detailedMovies', detailedMovies.length);
+        
+        if (detailedMovies.length < 0) return;
+        
+        for (const movie of detailedMovies) {
+          const hasAdultKeyword = movie.keywords?.keywords?.some(
+            (k) =>
+              k.id === 155477 ||
             k.id === 321739 ||
             k.id === 264386 ||
             k.id === 738 ||
@@ -218,15 +210,20 @@ async function getMovies(sortedMovies) {
             k.id === 190370 ||
             k.id === 256466 ||
             k.id === 159551
-        );
-        if (hasAdultKeyword) {
-          console.log('(keyword) Adult movie, skipping:', movie.title);
-          MovieSkipped++;
-          continue; // stops processing this movie, moves to next
+          );
+          if (hasAdultKeyword) {
+            console.log('(keyword) Adult movie, skipping:', movie.title);
+            MovieSkipped++;
+            continue; // stops processing this movie, moves to next
+          }
+          filteredMovies.push(movie);
+          passedMovie++;
         }
-        filteredMovies.push(movie);
-        passedMovie++;
+      } else {
+        filteredMovies = data.results;
       }
+
+
       console.log('filteredMovies', filteredMovies.length)
       console.log('skippedMovies', MovieSkipped);
       console.log('passedMovie', passedMovie);
