@@ -89,7 +89,6 @@
     border-radius: 50%;
     z-index: -1;
     opacity: 1;
-    box-shadow: 0 0 15px 5px black;
     visibility: visible;
     pointer-events: auto;
   }
@@ -155,21 +154,47 @@
   #moviePoster {
     width: 80%;
   }
+
+  .dropdown-toggle-container {
+    border: 2px solid #ffffff5c;
+  }
+
+  input {
+    border: 2px solid #ffffff3d;
+  }
+
+
+  #searchBtn {
+    border: 2px solid #00000026;
+  }
+
+  .login {
+    border: 2px solid #ffffff4d;
+    filter: none;
+    backdrop-filter: none;
+  }
+
+  .site-name {
+    font-size: 25px;
+    filter: none;
+  }
+
+  .bars {
+    padding: 6px 4px;
+    border: 2px solid #ffffff80;
+    opacity: 0.7;
+  }
+
+  .dropdown-menu {
+    border: 2px solid #ffffff6b;
+  }
 }
 
 @media (min-width: 900px) {
   .header {
-    width: 100%;
+    width: 90%;
     height: 85px;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    color: #4dc6fff1;
-    border-radius: 0 0 10px 10px;
-    border: 1px solid #ffffff52;
-    background-color: #001629e0;
-    z-index: 20;
-    align-items: center;
+    padding: 40px;
   }
 
   .menu {
@@ -178,11 +203,11 @@
     transition: 0.5s ease;
     order: 2;
   }
- 
+
   .bar-container {
     position: relative;
   }
-  
+
   .bars {
     display: none;
   }
@@ -198,14 +223,6 @@
     width: auto;
     height: auto;
     padding: 0;
-  }
-
-  .option {
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #ffffff5e;
-    padding: 10px 20px;
-    width: fit-content;
   }
 
   .site-name {

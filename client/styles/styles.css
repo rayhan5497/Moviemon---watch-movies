@@ -7,6 +7,7 @@
 
 html {
     height: 100vh;
+    /* scroll-behavior: smooth; */
 }
 
 body {
@@ -19,17 +20,16 @@ body {
 }
 
 .header {
-    width: 100%;
-    height: 67px;
     display: flex;
     justify-content: space-between;
     padding: 10px;
     color: #4dc6fff1;
     border-radius: 0 0 10px 10px;
     border: 1px solid #ffffff52;
-    background-color: #ffffff00;
+    background-color: #001629e0;
     z-index: 20;
     align-items: center;
+    width: 100%;
 }
 
 .menu {
@@ -115,16 +115,15 @@ body {
 }
 
 #overlay-root {
-  position: fixed;
-  inset: 0;
-  z-index: 99990;
-  pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    pointer-events: none;
 }
 
 .container {
     height: 100%;
     width: 90%;
-    max-width: 100%;
     text-align: center;
     will-change: filter;
 }
@@ -429,33 +428,33 @@ button:hover {
 
 
 .result-item-wrapper {
-  background: #00000078;
-  padding: 6px 4px 0;
-  border-radius: 10px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 2px solid #ffffff82;
-  width: 100%;
-  overflow: hidden;
+    background: #00000078;
+    padding: 6px 4px 0;
+    border-radius: 10px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid #ffffff82;
+    width: 100%;
+    overflow: hidden;
 }
 
 .result-item {
-  background: #00000099;
-  padding: 0;
-  border-radius: 7px;
-  height: 100%;
-  width: 175px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease;
-  border: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top;
-  align-self: center;
+    background: #00000099;
+    padding: 0;
+    border-radius: 7px;
+    height: 100%;
+    width: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+    border: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    align-self: center;
 }
 
 .title {
@@ -488,11 +487,9 @@ button:hover {
     margin-right: 5px;
     color: #00ffde;
     font-size: 20px;
-    backdrop-filter: blur(3px);
-    font-weight: bold;
-    filter: drop-shadow(0px 0px 2px black);
-    box-shadow: 0 0 5px 1px #0000008f;
+    font-weight: 700;
     margin-top: 220px;
+    background: #00000054;
 }
 
 .dm-btns {
