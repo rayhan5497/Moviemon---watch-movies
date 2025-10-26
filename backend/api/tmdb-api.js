@@ -9,10 +9,8 @@ let passedMovie = 0;
 let MovieSkipped = 0;
 let filterAdult = true;
 
-let data;
-
 async function initGetMoviesApp(queryParams) {
-  defaultParams = {...queryParams, api_key: api_key};
+  defaultParams = { ...queryParams, api_key: api_key };
   if (defaultParams.query) {
     isSearchPage = true;
     isHomePage = false;
@@ -79,9 +77,9 @@ async function getMovies(sortedMovies) {
 
     const response = await getResponse();
 
-    const previousData = data;
+    const data = await response.json();
 
-    data = await response.json();
+    console.log('data length', data.results.length)
 
     if (data.results.length === 0) {
       console.log('data', 0);
@@ -89,8 +87,8 @@ async function getMovies(sortedMovies) {
     }
 
     let filteredMovies = [];
-    let movieDetails;
     async function processMovies(movies) {
+      let filteredIds = [];
       for (const movie of movies) {
         if (filterAdult) {
           if (movie.adult === true) {
@@ -194,29 +192,44 @@ async function getMovies(sortedMovies) {
             continue;
           }
 
-          movieDetails = await getMovieDetails(movie.id); // pause until details arrive
-          if (!movieDetails) continue;
-
-          const hasAdultKeyword = movieDetails.keywords?.keywords?.some(
-            (k) =>
-              k.id === 155477 ||
-              k.id === 321739 ||
-              k.id === 264386 ||
-              k.id === 738 ||
-              k.id === 596 ||
-              k.id === 190370 ||
-              k.id === 256466 ||
-              k.id === 159551
-          );
-          if (hasAdultKeyword) {
-            console.log('(keyword) Adult movie, skipping:', movieDetails.title);
-            MovieSkipped++;
-            continue; // stops processing this movie, moves to next
-          }
-          filteredMovies.push(movieDetails);
+          filteredIds.push(movie.id);
         }
+      }
+
+      // Filter Movies by keywords after getting individual data of each movies.
+      const detailedMovies = await Promise.all(
+        filteredIds.map((id) => getMovieDetails(id))
+      );
+
+
+      console.log('filteredIds', filteredIds.length);
+      console.log('detailedMovies', detailedMovies.length);
+
+      if (detailedMovies.length < 0) return;
+
+      for (const movie of detailedMovies) {
+        const hasAdultKeyword = movie.keywords?.keywords?.some(
+          (k) =>
+            k.id === 155477 ||
+            k.id === 321739 ||
+            k.id === 264386 ||
+            k.id === 738 ||
+            k.id === 596 ||
+            k.id === 190370 ||
+            k.id === 256466 ||
+            k.id === 159551
+        );
+        if (hasAdultKeyword) {
+          console.log('(keyword) Adult movie, skipping:', movie.title);
+          MovieSkipped++;
+          continue; // stops processing this movie, moves to next
+        }
+        filteredMovies.push(movie);
         passedMovie++;
       }
+      console.log('filteredMovies', filteredMovies.length)
+      console.log('skippedMovies', MovieSkipped);
+      console.log('passedMovie', passedMovie);
     }
 
     await processMovies(data.results);
@@ -232,12 +245,8 @@ async function getMovies(sortedMovies) {
   } catch (error) {
     console.error('Error fetching torrents:', error);
   }
-
-  // console.log('data', data);
-  console.log('PASSED MOVIE', passedMovie);
-  console.log('MOVIE SKIPPED', MovieSkipped);
 }
 
 module.exports = {
-  initGetMoviesApp
+  initGetMoviesApp,
 };
